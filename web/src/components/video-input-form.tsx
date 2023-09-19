@@ -6,7 +6,7 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { getFFmpeg } from "@/lib/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
-import { api } from "@/lib/axios";
+// import { api } from "@/lib/axios";
 
 type Status = 'waiting' | 'converting' | 'uploading' | 'generating' | 'success'
 
@@ -75,13 +75,16 @@ export function VideoInputForm(props: VideoInputFormProps) {
 
     console.log('Convert finished.')
 
-    return audioFile
+    return {
+      audioFileBlob,
+      audioFile,
+    }
   }
 
   async function handleUploadVideo(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const prompt = promptInputRef.current?.value
+    // const prompt = promptInputRef.current?.value
     
     if (!videoFile) {
       return
@@ -89,25 +92,39 @@ export function VideoInputForm(props: VideoInputFormProps) {
 
     setStatus("converting")
 
-    const audioFile = await convertVideoToAudio(videoFile)
+    const { audioFileBlob } = await convertVideoToAudio(videoFile)
     
-    const data = new FormData()
-    data.append('file', audioFile)
+    // NECESSÁRIO PARA FAZER O UPLOAD PARA O SERVIDOR
+    // const data = new FormData()
+    // data.append('file', audioFile)
 
-    setStatus("uploading")
+    // setStatus("uploading")
 
-    const response = await api.post('/videos', data)
-    const videoId = response.data.video.id
+    // const response = await api.post('/videos', data)
+    // const videoId = response.data.video.id
 
-    setStatus("generating")
+    // REALIZAR A TRANSCRIÇÃO DO VÍDEO
+    // setStatus("generating")
 
-    // realizar a trancrição do aúdio
     // await api.post(`/videos/${videoId}/transcription`, {
     //   prompt,
     // })
 
     setStatus("success")
-    props.onVideoUploaded(videoId)
+
+    // REALIZAR A TRANSCRIÇÃO DO VÍDEO
+    // props.onVideoUploaded(videoId)
+
+    const audioUrl = URL.createObjectURL(audioFileBlob);
+
+    const a = document.createElement('a')
+    a.href = audioUrl
+    a.download = 'convert.mp3'
+    a.style.display = 'none'
+
+    document.body.appendChild(a)
+    a.click()
+    URL.revokeObjectURL(audioUrl)
   }
 
   const previewURL = useMemo(() => {

@@ -7,7 +7,7 @@ import fs from "node:fs";
 import {promisify} from 'node:util'
 import {pipeline} from 'node:stream'
 
-import { prisma } from "../lib/prisma";
+// import { prisma } from "../lib/prisma";
 
 const pump = promisify(pipeline)
 
@@ -39,5 +39,19 @@ export async function uploadVideoRoute(app:FastifyInstance) {
     // })
     
     // return { video }
+    return reply.send({ fileUploadName })
+
+    // const stream = fs.createReadStream(uploadDestination)
+
+    // reply.headers({
+    //   'Content-Disposition': `attachment; filename="${fileUploadName}"`,
+    //   // 'Content-Type': 'octet-stream',
+    //   'Content-Type': 'audio/mpeg'
+    // })
+
+    // const responseObject = { fileUploadName, stream }
+    // const responseString = JSON.stringify(responseObject);
+    // reply.send(responseString);
+    
   })
 }

@@ -67,7 +67,7 @@ export function App() {
         </div>
 
         <aside className="w-80 space-y-6">
-          <VideoInputForm  onVideoUploaded={setvideoId}/>
+          <VideoInputForm onVideoUploaded={setvideoId}/>
 
           <Separator />
 

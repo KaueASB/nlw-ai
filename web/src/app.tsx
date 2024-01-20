@@ -37,9 +37,11 @@ export function App() {
 
         <Separator orientation="vertical" className="h-6"/>
 
-          <Button variant="outline">
-            <Github className="w-4 h-4 mr-2"/>  
-            Github
+          <Button variant="outline" asChild>
+            <a href='https://github.com/KaueASB/nlw-ai/tree/main' target='_blank'>
+              <Github className="w-4 h-4 mr-2"/>  
+              Github
+            </a>
           </Button>
         </div>
       </header>

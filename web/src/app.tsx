@@ -100,6 +100,7 @@ export function App() {
               <Label>Temperatura</Label>
               <Slider
                 className="cursor-pointer"
+                disabled
                 min={0}
                 max={1}
                 step={0.1}
@@ -113,7 +114,7 @@ export function App() {
 
             <Separator />
 
-            <Button disabled={isLoading} type="submit" className="w-full">
+            <Button disabled={true /*isLoading*/} type="submit" className="w-full">
               Executar
               <Wand2 className="w-4 h-4 ml-2"/>
             </Button>
